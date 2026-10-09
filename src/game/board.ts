@@ -10,24 +10,34 @@ export const createBoard = ({
   rowsCount: number;
   colCount: number;
 }) => {
+  if (tileTypeCount < 3) {
+    throw new Error("tileTypeCount must be at least 3");
+  }
+  
   const rowArray: null[] = Array(colCount).fill(null);
+  const checkCol = Array.from({ length: colCount }, () => [10]);
 
   const board: Board = Array.from({ length: rowsCount }, () => {
     const checkRow = [10];
 
-    return rowArray.map(() => {
-      const randomTile = Math.floor(Math.random() * tileTypeCount);
-      checkRow.push(randomTile);
-      if (checkRow.slice(-3).every((i) => i === randomTile)) {
-        const newTile =
-          randomTile === tileTypeCount - 1 ? randomTile - 1 : randomTile + 1;
-        checkRow.push(newTile);
-
-        return createTile(newTile);
+    return rowArray.map((_, i) => {
+      let randomTile = Math.floor(Math.random() * tileTypeCount);
+      if (
+        checkRow.slice(-2).every((item) => item === randomTile) ||
+        checkCol[i].slice(-2).every((item) => item === randomTile)
+      ) {
+        while (
+          randomTile === checkRow.at(-1) ||
+          randomTile === checkCol[i].at(-1)
+        ) {
+          randomTile = Math.floor(Math.random() * tileTypeCount);
+        }
       }
+
+      checkRow.push(randomTile);
+      checkCol[i].push(randomTile);
       return createTile(randomTile);
     });
   });
-
   return board;
 };
