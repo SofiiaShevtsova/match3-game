@@ -2,29 +2,37 @@ import { Board, Position } from "./types";
 
 export const findMatches = (board: Board): Position[] => {
   const positionArray: string[] = [];
-  board.forEach((row, ind) => {
-    row.forEach((tile, i) => {
+  board.forEach((row, rowIndex) => {
+    row.forEach((tile, colIndex) => {
       if (!tile?.type) {
         return;
       }
       if (
-        board[ind][i + 1] &&
-        board[ind][i + 2] &&
-        [board[ind][i + 1], board[ind][i + 2]].every(
+        board[rowIndex][colIndex + 1] &&
+        board[rowIndex][colIndex + 2] &&
+        [board[rowIndex][colIndex + 1], board[rowIndex][colIndex + 2]].every(
           (item) => item?.type === tile.type,
         )
       ) {
-        positionArray.push(`${ind}-${i}`, `${ind}-${i + 1}`, `${ind}-${i + 2}`);
+        positionArray.push(
+          `${rowIndex}-${colIndex}`,
+          `${rowIndex}-${colIndex + 1}`,
+          `${rowIndex}-${colIndex + 2}`,
+        );
       }
-      
+
       if (
-        board[ind + 1] &&
-        board[ind + 2] &&
-        [board[ind + 1][i], board[ind + 2][i]].every(
+        board[rowIndex + 1] &&
+        board[rowIndex + 2] &&
+        [board[rowIndex + 1][colIndex], board[rowIndex + 2][colIndex]].every(
           (item) => item?.type === tile.type,
         )
       ) {
-        positionArray.push(`${ind}-${i}`, `${ind + 1}-${i}`, `${ind + 2}-${i}`);
+        positionArray.push(
+          `${rowIndex}-${colIndex}`,
+          `${rowIndex + 1}-${colIndex}`,
+          `${rowIndex + 2}-${colIndex}`,
+        );
       }
     });
   });
