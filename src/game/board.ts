@@ -9,11 +9,11 @@ export const createBoard = ({
   tileTypeCount: number;
   rowsCount: number;
   colCount: number;
-}) => {
-  if (tileTypeCount < 3) {
-    throw new Error("tileTypeCount must be at least 3");
+}): Board => {
+  if (tileTypeCount < 3 || tileTypeCount > 5) {
+    throw new Error("tileTypeCount must be at least 3 and max 5");
   }
-  
+
   const rowArray: null[] = Array(colCount).fill(null);
   const checkCol = Array.from({ length: colCount }, () => [10]);
 
