@@ -58,17 +58,12 @@ export const removeMatches = ({
 };
 
 export const applyGravity = ({ board }: { board: Board }): Board => {
-  const currentBoard = board.map((col) => [...col]);
-  const colCount = currentBoard[0].length;
-  const colArrays = Array.from({ length: colCount }, () => []);
+  const currentBoard = board.map((col) => [...col.filter((tile) => !!tile)]);
+  const rowsCount = board[0].length;
 
-  for (let index = 0; index < board.length; index++) {
-    const row = board[index];
-    row.forEach((tile, colInd) => {
-      colArrays[colInd].push(tile);
-    });
-  }
-
-  const newBoard = currentBoard.map((row, rowInd) => {});
+  const newBoard = currentBoard.map((col) => [
+    ...Array(rowsCount - col.length).fill(null),
+    ...col,
+  ]);
   return newBoard;
 };
