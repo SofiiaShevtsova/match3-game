@@ -1,8 +1,5 @@
 import { findMatches } from "./matches";
-import { Board, Position } from "./types";
-
-// isValidMove({ board, tileOne, tileTwo }): boolean
-// чому не перевірити поле функцією findMatches
+import { Board, Position, Tile } from "./types";
 
 export const swapTiles = ({
   board,
@@ -13,9 +10,9 @@ export const swapTiles = ({
   tileOne: Position;
   tileTwo: Position;
 }): Board => {
-  const newBoard = board.map((row) => [...row]);
-  newBoard[tileOne.row][tileOne.col] = board[tileTwo.row][tileTwo.col];
-  newBoard[tileTwo.row][tileTwo.col] = board[tileOne.row][tileOne.col];
+  const newBoard = board.map((col) => [...col]);
+  newBoard[tileOne.col][tileOne.row] = board[tileTwo.col][tileTwo.row];
+  newBoard[tileTwo.col][tileTwo.row] = board[tileOne.col][tileOne.row];
 
   return newBoard;
 };
@@ -52,10 +49,26 @@ export const removeMatches = ({
   board: Board;
   positions: Position[];
 }): Board => {
-  const newBoard = board.map((row) => [...row]);
+  const newBoard = board.map((col) => [...col]);
   positions.forEach((position) => {
-    newBoard[position.row][position.col] = null;
+    newBoard[position.col][position.row] = null;
   });
 
+  return newBoard;
+};
+
+export const applyGravity = ({ board }: { board: Board }): Board => {
+  const currentBoard = board.map((col) => [...col]);
+  const colCount = currentBoard[0].length;
+  const colArrays = Array.from({ length: colCount }, () => []);
+
+  for (let index = 0; index < board.length; index++) {
+    const row = board[index];
+    row.forEach((tile, colInd) => {
+      colArrays[colInd].push(tile);
+    });
+  }
+
+  const newBoard = currentBoard.map((row, rowInd) => {});
   return newBoard;
 };

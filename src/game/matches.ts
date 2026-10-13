@@ -2,44 +2,44 @@ import { Board, Position } from "./types";
 
 export const findMatches = (board: Board): Position[] => {
   const positionArray: string[] = [];
-  board.forEach((row, rowIndex) => {
-    row.forEach((tile, colIndex) => {
+  board.forEach((col, colInd) => {
+    col.forEach((tile, rowInd) => {
       if (!tile?.type) {
         return;
       }
       if (
-        board[rowIndex][colIndex + 1] &&
-        board[rowIndex][colIndex + 2] &&
-        [board[rowIndex][colIndex + 1], board[rowIndex][colIndex + 2]].every(
+        board[colInd][rowInd + 1] &&
+        board[colInd][rowInd + 2] &&
+        [board[colInd][rowInd + 1], board[colInd][rowInd + 2]].every(
           (item) => item?.type === tile.type,
         )
       ) {
         positionArray.push(
-          `${rowIndex}-${colIndex}`,
-          `${rowIndex}-${colIndex + 1}`,
-          `${rowIndex}-${colIndex + 2}`,
+          `${colInd}-${rowInd}`,
+          `${colInd}-${rowInd + 1}`,
+          `${colInd}-${rowInd + 2}`,
         );
       }
 
       if (
-        board[rowIndex + 1] &&
-        board[rowIndex + 2] &&
-        [board[rowIndex + 1][colIndex], board[rowIndex + 2][colIndex]].every(
+        board[colInd + 1] &&
+        board[colInd + 2] &&
+        [board[colInd + 1][rowInd], board[colInd + 2][rowInd]].every(
           (item) => item?.type === tile.type,
         )
       ) {
         positionArray.push(
-          `${rowIndex}-${colIndex}`,
-          `${rowIndex + 1}-${colIndex}`,
-          `${rowIndex + 2}-${colIndex}`,
+          `${colInd}-${rowInd}`,
+          `${colInd + 1}-${rowInd}`,
+          `${colInd + 2}-${rowInd}`,
         );
       }
     });
   });
 
   const positions = Array.from(new Set(positionArray)).map((position) => ({
-    row: Number(position.split("-")[0]),
-    col: Number(position.split("-")[1]),
+    row: Number(position.split("-")[1]),
+    col: Number(position.split("-")[0]),
   }));
   return positions;
 };

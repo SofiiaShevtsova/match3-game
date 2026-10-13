@@ -5,6 +5,7 @@ export type Tile = {
   type: TileType; 
 };
 
+// board [col][row]
 export type Board = (Tile | null)[][];
 
 export type Position = {
