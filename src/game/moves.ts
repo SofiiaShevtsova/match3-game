@@ -77,3 +77,36 @@ export const applyGravity = ({
   ]);
   return newBoard;
 };
+
+export const hasPossibleMoves = ({ board }: { board: Board }): boolean => {
+  const colCount = board.length;
+  const rowsCount = board[0].length;
+
+  const move = board.find((col, colInd) => {
+    const foundTile = col.find((_, rowInd) => {
+      const moveInRow =
+        rowInd === rowsCount - 1
+          ? null
+          : tryMove({
+              board,
+              tileOne: { row: rowInd, col: colInd },
+              tileTwo: { row: rowInd + 1, col: colInd },
+            });
+      const moveInCol =
+        colInd === colCount - 1
+          ? null
+          : tryMove({
+              board,
+              tileOne: { row: rowInd, col: colInd },
+              tileTwo: { row: rowInd, col: colInd + 1 },
+            });
+      if (moveInCol || moveInRow) {
+        return true;
+      }
+      return false;
+    });
+
+    return foundTile ? true : false;
+  });
+  return move ? true : false;
+};
