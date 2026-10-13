@@ -12,3 +12,7 @@ export type Position = {
   row: number;
   col: number;
 };
+
+export type Result = {
+  points: number;
+}

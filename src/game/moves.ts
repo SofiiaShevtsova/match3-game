@@ -1,3 +1,4 @@
+import { createTile } from "../utils/createTile";
 import { findMatches } from "./matches";
 import { Board, Position, Tile } from "./types";
 
@@ -57,12 +58,21 @@ export const removeMatches = ({
   return newBoard;
 };
 
-export const applyGravity = ({ board }: { board: Board }): Board => {
+export const applyGravity = ({
+  board,
+  tileTypeCount,
+}: {
+  board: Board;
+  tileTypeCount: number;
+}): Board => {
   const currentBoard = board.map((col) => [...col.filter((tile) => !!tile)]);
   const rowsCount = board[0].length;
 
   const newBoard = currentBoard.map((col) => [
-    ...Array(rowsCount - col.length).fill(null),
+    ...Array.from({ length: rowsCount - col.length }, () => {
+      const randomTile = Math.floor(Math.random() * tileTypeCount);
+      return createTile(randomTile);
+    }),
     ...col,
   ]);
   return newBoard;
