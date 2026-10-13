@@ -44,3 +44,18 @@ export const tryMove = ({
 
   return hasMatches ? newBoard : null;
 };
+
+export const removeMatches = ({
+  board,
+  positions,
+}: {
+  board: Board;
+  positions: Position[];
+}): Board => {
+  const newBoard = board.map((row) => [...row]);
+  positions.forEach((position) => {
+    newBoard[position.row][position.col] = null;
+  });
+
+  return newBoard;
+};
