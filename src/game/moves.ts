@@ -38,7 +38,7 @@ export const tryMove = ({
   }
   const newBoard = swapTiles({ board, tileOne, tileTwo });
 
-  const hasMatches = !!findMatches(newBoard).length;
+  const hasMatches = findMatches(newBoard).length  > 0;
 
   return hasMatches ? newBoard : null;
 };
@@ -78,7 +78,7 @@ export const applyGravity = ({
   return newBoard;
 };
 
-export const hasPossibleMoves = ({ board }: { board: Board }): boolean => {
+export const hasPossibleMoves = (board: Board): boolean => {
   const colCount = board.length;
   const rowsCount = board[0].length;
 
