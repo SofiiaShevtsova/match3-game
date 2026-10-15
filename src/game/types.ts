@@ -15,4 +15,5 @@ export type Position = {
 
 export type Result = {
   points: number;
+  board: Board;
 }

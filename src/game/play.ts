@@ -17,7 +17,7 @@ export const playMove = ({
     let currentBoard = tryMove({ board, tileOne, tileTwo });
 
     if (!currentBoard) {
-        return { points };
+        return { points, board };
     }
 
     let positionsForRemove = findMatches(currentBoard);
@@ -38,5 +38,5 @@ export const playMove = ({
         positionsForRemove = findMatches(currentBoard);
     }
 
-    return { points };
+    return { points, board: currentBoard };
 };
