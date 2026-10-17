@@ -29,6 +29,6 @@ export type LevelConfig = {
 
 export type UserData = {
   playerName: string;
-  currentLevel: number;
+  finishedLevel: number;
   totalPoints: number;
 };

@@ -4,11 +4,11 @@ import { UserData } from "../game/types";
 
 export const saveUserData = async ({
   playerName,
-  currentLevel,
+  finishedLevel,
   totalPoints,
 }: UserData) => {
   try {
-    const userData = { playerName, currentLevel, totalPoints };
+    const userData = { playerName, finishedLevel, totalPoints };
     await AsyncStorage.setItem("userData", JSON.stringify(userData));
   } catch (error) {
     console.error("Error saving user data:", error);
