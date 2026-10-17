@@ -1,9 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
 
 import { Welcome } from "./src/screens/Welcome";
 import { Game } from "./src/screens/Game";
+import { useEffect, useState } from "react";
+
+SplashScreen.preventAutoHideAsync();
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -13,6 +18,30 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    async function loadFonts() {
+      try {
+        await Font.loadAsync({
+          EmilysCandy: require("./assets/fonts/EmilysCandy-Regular.ttf"),
+          MainRegular: require("./assets/fonts/Gorditas-Regular.ttf"),
+          MainBolt: require("./assets/fonts/Gorditas-Bold.ttf"),
+        });
+      } catch (e) {
+        console.warn("Font loading error:", e);
+      } finally {
+        setFontsLoaded(true);
+      }
+    }
+
+    loadFonts();
+  }, []);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator

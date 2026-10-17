@@ -31,7 +31,7 @@ export const NameInput: FC<NameInputProps> = ({
   }, [editName]);
 
   return (
-    <View style={styles.flexRow}>
+    <View style={styles.flexCenter}>
       <TextInput
         ref={inputRef}
         style={styles.input}

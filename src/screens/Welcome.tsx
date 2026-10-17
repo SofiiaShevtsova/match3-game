@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Text, View, Pressable, Alert } from "react-native";
+import { Text, View, Pressable, Alert, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import * as SplashScreen from "expo-splash-screen";
 
 import { RootStackParamList } from "../../App";
 import { getUserData, saveUserData } from "../storage/storage";
@@ -58,6 +59,7 @@ export const Welcome = () => {
       } catch (error) {
         console.error("Error fetching user data:", error);
       } finally {
+        SplashScreen.hideAsync();
         setLoading(false);
       }
     };
@@ -74,27 +76,39 @@ export const Welcome = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome!</Text>
-      <NameInput
-        playerName={user.playerName}
-        saveName={saveName}
-        editName={editName}
-        setEditName={setEditName}
-      />
-      <Text style={styles.subtitle}>Finished Level: {user.finishedLevel}</Text>
-      <Text style={styles.subtitle}>Points: {user.totalPoints}</Text>
-      <Pressable
-        style={
-          !user.playerName.trim() || editName
-            ? styles.buttonDisabled
-            : styles.button
-        }
-        disabled={!user.playerName.trim() || editName}
-        onPress={handleStartGame}
-      >
-        <Text style={styles.buttonText}>Start Game</Text>
-      </Pressable>
-    </View>
+    <ImageBackground
+      source={require("../../assets/background-welcome.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Welcome!</Text>
+        <NameInput
+          playerName={user.playerName}
+          saveName={saveName}
+          editName={editName}
+          setEditName={setEditName}
+        />
+        <View style={styles.flexBaseline}>
+          <Text style={styles.subtitle}>Finished Level:</Text>
+          <Text style={styles.subtitleValue}>{user.finishedLevel}</Text>
+        </View>
+        <View style={styles.flexBaseline}>
+          <Text style={styles.subtitle}>Total Points:</Text>
+          <Text style={styles.subtitleValue}>{user.totalPoints}</Text>
+        </View>
+        <Pressable
+          style={
+            !user.playerName.trim() || editName
+              ? styles.buttonDisabled
+              : styles.button
+          }
+          disabled={!user.playerName.trim() || editName}
+          onPress={handleStartGame}
+        >
+          <Text style={styles.buttonText}>Start Game</Text>
+        </Pressable>
+      </View>
+    </ImageBackground>
   );
 };

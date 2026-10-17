@@ -1,57 +1,94 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingBottom: 120,
+  },
+  container: {
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
     gap: 20,
+    backgroundColor: "rgba(220, 210, 130, 0.5)",
+    padding: 20,
+    borderRadius: 10,
   },
-  flexRow: {
+  flexCenter: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
   },
+  flexBaseline: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "baseline",
+    gap: 10,
+  },
+
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontFamily: "MainBolt",
+    color: "black",
+    textShadowColor: "rgba(0, 100, 0, 0.8)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
   },
   subtitle: {
     fontSize: 18,
+    fontFamily: "EmilysCandy",
+    color: "black",
+  },
+  subtitleValue: {
+    fontSize: 20,
+    fontFamily: "MainBolt",
+    color: "rgb(0, 100, 0)",
   },
   input: {
-    height: 40,
     borderColor: "gray",
     borderWidth: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     width: "80%",
+    color: "black",
+    fontSize: 20,
+    fontFamily: "MainRegular",
   },
   button: {
-    backgroundColor: "blue",
+    backgroundColor: "green",
     padding: 10,
     borderRadius: 5,
+    borderColor: "white",
+    borderWidth: 1,
     width: 250,
   },
   buttonDisabled: {
     backgroundColor: "gray",
     padding: 10,
     borderRadius: 5,
+    borderColor: "gray",
+    borderWidth: 1,
     width: 250,
   },
   iconBtn: {
     backgroundColor: "gray",
     padding: 1,
     borderRadius: 20,
+    borderColor: "gray",
+    borderWidth: 1,
     width: 40,
     height: 40,
     justifyContent: "center",
     alignItems: "center",
   },
   iconBtnActive: {
-    backgroundColor: "blue",
+    backgroundColor: "green",
     padding: 1,
     borderRadius: 20,
+    borderColor: "white",
+    borderWidth: 1,
     width: 40,
     height: 40,
     justifyContent: "center",
@@ -60,7 +97,7 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 18,
-    fontWeight: "bold",
     textAlign: "center",
+    fontFamily: "MainBolt",
   },
 });
