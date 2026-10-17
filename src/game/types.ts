@@ -17,3 +17,18 @@ export type Result = {
   points: number;
   board: Board;
 }
+
+export type LevelConfig = {
+  id: number;
+  tileTypeCount: number; 
+  rowsCount: number;
+  colCount: number;
+  goal: number;        
+  moves: number;      
+};
+
+export type UserData = {
+  playerName: string;
+  currentLevel: number;
+  totalPoints: number;
+};
