@@ -1,25 +1,41 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  backgroundGame: {
+    flex: 1,
+    paddingVertical: 50,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+  },
   background: {
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "center",
     paddingBottom: 120,
   },
-  container: {
+  blurCard: {
     margin: 10,
     justifyContent: "center",
     alignItems: "center",
     gap: 20,
-    backgroundColor: "rgba(220, 210, 130, 0.5)",
     padding: 20,
     borderRadius: 10,
+    overflow: "hidden",
+    backgroundColor: "rgba(220, 210, 130, 0.5)",
+  },
+  boardCard: {
+    width: "100%",
+    minHeight: 400,
+    backgroundColor: "rgba(220, 210, 130, 0.5)",
   },
   flexCenter: {
+    width: "100%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     gap: 10,
   },
   flexBaseline: {

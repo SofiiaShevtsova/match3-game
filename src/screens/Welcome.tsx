@@ -3,11 +3,12 @@ import { Text, View, Pressable, Alert, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import * as SplashScreen from "expo-splash-screen";
+import { BlurView } from "expo-blur";
 
 import { RootStackParamList } from "../../App";
 import { getUserData, saveUserData } from "../storage/storage";
 import { UserData } from "../game/types";
-import { styles } from "../welcomeStyles";
+import { styles } from "../styles/styles";
 import { NameInput } from "../components/nameInput";
 
 type WelcomeScreenNavigationProp = NativeStackNavigationProp<
@@ -44,7 +45,7 @@ export const Welcome = () => {
     if (!user.playerName.trim()) {
       return;
     }
-    navigation.navigate("Game", { levelId: user.finishedLevel + 1 });
+    navigation.navigate("Game", { levelId: user.finishedLevel });
   };
 
   useEffect(() => {
@@ -69,7 +70,7 @@ export const Welcome = () => {
 
   if (loading) {
     return (
-      <View style={styles.container}>
+      <View style={styles.background}>
         <Text style={styles.title}>Loading...</Text>
       </View>
     );
@@ -81,7 +82,7 @@ export const Welcome = () => {
       style={styles.background}
       resizeMode="cover"
     >
-      <View style={styles.container}>
+      <BlurView intensity={80} tint="default" style={styles.blurCard}>
         <Text style={styles.title}>Welcome!</Text>
         <NameInput
           playerName={user.playerName}
@@ -108,7 +109,7 @@ export const Welcome = () => {
         >
           <Text style={styles.buttonText}>Start Game</Text>
         </Pressable>
-      </View>
+      </BlurView>
     </ImageBackground>
   );
 };

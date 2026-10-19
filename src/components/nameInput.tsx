@@ -2,7 +2,7 @@ import { Dispatch, FC, useEffect, useRef, useState } from "react";
 import { View, TextInput, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { styles } from "../welcomeStyles";
+import { styles } from "../styles/styles";
 
 type NameInputProps = {
   playerName: string;
