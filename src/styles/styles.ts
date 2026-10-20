@@ -27,8 +27,26 @@ export const styles = StyleSheet.create({
   },
   boardCard: {
     width: "100%",
-    minHeight: 400,
-    backgroundColor: "rgba(220, 210, 130, 0.5)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    display: "flex",
+    flexDirection: "row",
+  },
+  tile: {
+    borderWidth: 1,
+    borderColor: "gray",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  circleTile: {
+    width: '80%',
+    height: '80%',
+    borderRadius: 100,
+    backgroundColor: 'rgb(46, 204, 113)',
+  },
+  squareTile: {
+    width: '80%',
+    height: '80%',
+    backgroundColor: 'rgb(241, 196, 15)',
   },
   flexCenter: {
     width: "100%",
