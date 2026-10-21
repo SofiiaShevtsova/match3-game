@@ -7,7 +7,7 @@ import { RootStackParamList } from "../../App";
 import { styles } from "../styles/styles";
 import { levels } from "../levels/levels";
 import { createBoard } from "../game/board";
-import { BoardCard } from "../components/boardCard";
+import { BoardCard } from "../components/BoardCard";
 
 type GameProps = NativeStackScreenProps<RootStackParamList, "Game">;
 

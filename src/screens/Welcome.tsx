@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, Pressable, Alert, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -9,7 +9,7 @@ import { RootStackParamList } from "../../App";
 import { getUserData, saveUserData } from "../storage/storage";
 import { UserData } from "../game/types";
 import { styles } from "../styles/styles";
-import { NameInput } from "../components/nameInput";
+import { NameInput } from "../components/NameInput";
 
 type WelcomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
