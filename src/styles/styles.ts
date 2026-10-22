@@ -38,15 +38,15 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   circleTile: {
-    width: '80%',
-    height: '80%',
+    width: "80%",
+    height: "80%",
     borderRadius: 100,
-    backgroundColor: 'rgb(46, 204, 113)',
+    backgroundColor: "rgb(46, 204, 113)",
   },
   squareTile: {
-    width: '80%',
-    height: '80%',
-    backgroundColor: 'rgb(241, 196, 15)',
+    width: "80%",
+    height: "80%",
+    backgroundColor: "rgb(241, 196, 15)",
   },
   flexCenter: {
     width: "100%",
@@ -77,11 +77,17 @@ export const styles = StyleSheet.create({
     color: "black",
   },
   subtitleValue: {
-    width: 30,
     fontSize: 20,
     fontFamily: "MainBolt",
     color: "rgb(0, 100, 0)",
   },
+  subtitleValueWithWidth: {
+    width: 40,
+    fontSize: 20,
+    fontFamily: "MainBolt",
+    color: "rgb(0, 100, 0)",
+  },
+
   input: {
     borderColor: "gray",
     borderWidth: 1,

@@ -55,7 +55,14 @@ export const Game: FC<GameProps> = ({ route }) => {
 
   const changeMovesLeft = (currentPoints: number) => {
     if (points + currentPoints >= level.goal) {
-      navigation.navigate("Result", {
+      navigation.navigate("WinResult", {
+        levelId: levelId,
+        points: points + currentPoints,
+      });
+    }
+
+    if (movesLeft - 1 <= 0) {
+      navigation.navigate("LoseResult", {
         levelId: levelId,
         points: points + currentPoints,
       });
@@ -75,19 +82,6 @@ export const Game: FC<GameProps> = ({ route }) => {
     );
   }
 
-  if (movesLeft <= 0) {
-    return (
-      <ImageBackground
-        source={require("../../assets/background.png")}
-        style={styles.backgroundGame}
-        resizeMode="cover"
-      >
-        <Text style={styles.title}>You can't resolve this level</Text>
-        <Text style={styles.subtitle}>Final Score: {points}</Text>
-      </ImageBackground>
-    );
-  }
-
   return (
     <ImageBackground
       source={require("../../assets/background.png")}
@@ -98,15 +92,15 @@ export const Game: FC<GameProps> = ({ route }) => {
       <View style={styles.flexCenter}>
         <View style={styles.flexBaseline}>
           <Text style={styles.subtitle}>Points:</Text>
-          <Text style={styles.subtitleValue}>{points}</Text>
+          <Text style={styles.subtitleValueWithWidth}>{points}</Text>
         </View>
         <View style={styles.flexBaseline}>
           <Text style={styles.subtitle}>Goal:</Text>
-          <Text style={styles.subtitleValue}>{level.goal}</Text>
+          <Text style={styles.subtitleValueWithWidth}>{level.goal}</Text>
         </View>
         <View style={styles.flexBaseline}>
           <Text style={styles.subtitle}>Moves Left:</Text>
-          <Text style={styles.subtitleValue}>{movesLeft}</Text>
+          <Text style={styles.subtitleValueWithWidth}>{movesLeft}</Text>
         </View>
       </View>
       <GestureHandlerRootView style={{ width: "100%" }}>

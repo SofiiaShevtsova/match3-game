@@ -6,14 +6,16 @@ import * as Font from "expo-font";
 
 import { Welcome } from "./src/screens/Welcome";
 import { Game } from "./src/screens/Game";
-import { Result } from "./src/screens/Result";
+import { WinResult } from "./src/screens/WinResult";
+import { LoseResult } from "./src/screens/LoseResult";
 
 SplashScreen.preventAutoHideAsync();
 
 export type RootStackParamList = {
   Welcome: undefined;
   Game: { levelId: number };
-  Result: { levelId: number; points: number };
+  WinResult: { levelId: number; points: number };
+  LoseResult: { levelId: number; points: number };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -51,7 +53,8 @@ export default function App() {
       >
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Game" component={Game} />
-        <Stack.Screen name="Result" component={Result} />
+        <Stack.Screen name="WinResult" component={WinResult} />
+        <Stack.Screen name="LoseResult" component={LoseResult} />
       </Stack.Navigator>
     </NavigationContainer>
   );
