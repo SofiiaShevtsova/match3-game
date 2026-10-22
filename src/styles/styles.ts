@@ -77,6 +77,7 @@ export const styles = StyleSheet.create({
     color: "black",
   },
   subtitleValue: {
+    width: 30,
     fontSize: 20,
     fontFamily: "MainBolt",
     color: "rgb(0, 100, 0)",

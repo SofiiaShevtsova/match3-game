@@ -9,7 +9,7 @@ type UseBoardGameProps = {
   board: Board;
   tileTypeCount: number;
   changePoints: (delta: number) => void;
-  changeMovesLeft: () => void;
+  changeMovesLeft: (currentPoints: number) => void;
 };
 
 export const useBoardGame = ({
@@ -18,8 +18,8 @@ export const useBoardGame = ({
   changePoints,
   changeMovesLeft,
 }: UseBoardGameProps) => {
-  const [currentBoard, setCurrentBoard] = useState<Board>(
-    () => board.map((column) => [...column]),
+  const [currentBoard, setCurrentBoard] = useState<Board>(() =>
+    board.map((column) => [...column]),
   );
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -34,9 +34,7 @@ export const useBoardGame = ({
       setCurrentBoard(newBoard);
       changePoints(points);
 
-      await new Promise<void>((resolve) =>
-        setTimeout(resolve, 500),
-      );
+      await new Promise<void>((resolve) => setTimeout(resolve, 500));
 
       return true;
     },
@@ -44,10 +42,7 @@ export const useBoardGame = ({
   );
 
   const handleSwipe = useCallback(
-    ({ direction, position }: {
-      direction: Direction;
-      position: Position;
-    }) => {
+    ({ direction, position }: { direction: Direction; position: Position }) => {
       if (isAnimating) return;
 
       const colCount = currentBoard.length;
@@ -100,7 +95,7 @@ export const useBoardGame = ({
       })
         .then((result) => {
           if (result.points > 0) {
-            changeMovesLeft();
+            changeMovesLeft(result.points);
           }
 
           if (!hasPossibleMoves(result.board)) {
@@ -119,13 +114,7 @@ export const useBoardGame = ({
           setIsAnimating(false);
         });
     },
-    [
-      isAnimating,
-      currentBoard,
-      tileTypeCount,
-      showBoard,
-      changeMovesLeft,
-    ],
+    [isAnimating, currentBoard, tileTypeCount, showBoard, changeMovesLeft],
   );
 
   return {

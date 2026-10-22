@@ -11,7 +11,7 @@ type BoardCardProps = {
   tileSize: number;
   tileTypeCount: number;
   changePoints: (delta: number) => void;
-  changeMovesLeft: () => void;
+  changeMovesLeft: (currentPoints: number) => void;
 };
 
 export const BoardCard: FC<BoardCardProps> = ({

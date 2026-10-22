@@ -16,6 +16,7 @@ export const Game: FC<GameProps> = ({ route }) => {
   const level = levels[levelId];
   const [points, setPoints] = useState(0);
   const [movesLeft, setMovesLeft] = useState(level?.moves || 0);
+  const [isWin, setIsWin] = useState(false);
 
   const board = useMemo(() => {
     if (!level) {
@@ -36,9 +37,13 @@ export const Game: FC<GameProps> = ({ route }) => {
     setPoints((prev) => prev + delta);
   };
 
-  const changeMovesLeft = () => {
+  const changeMovesLeft = (currentPoints: number) => {
+    if (points + currentPoints >= level.goal) {
+      setIsWin(true);
+    }
     setMovesLeft((prev) => prev - 1);
   };
+
   if (!level || !board) {
     return (
       <ImageBackground
@@ -51,7 +56,7 @@ export const Game: FC<GameProps> = ({ route }) => {
     );
   }
 
-  if (points >= level.goal) {
+  if (isWin) {
     return (
       <ImageBackground
         source={require("../../assets/background.png")}
@@ -85,15 +90,18 @@ export const Game: FC<GameProps> = ({ route }) => {
     >
       <Text style={styles.title}>Level {levelId + 1}</Text>
       <View style={styles.flexCenter}>
-        <Text style={styles.subtitle}>
-          Points: <Text style={styles.subtitleValue}>{points}</Text>
-        </Text>
-        <Text style={styles.subtitle}>
-          Goal: <Text style={styles.subtitleValue}>{level.goal}</Text>
-        </Text>
-        <Text style={styles.subtitle}>
-          Moves Left: <Text style={styles.subtitleValue}>{movesLeft}</Text>
-        </Text>
+        <View style={styles.flexBaseline}>
+          <Text style={styles.subtitle}>Points:</Text>
+          <Text style={styles.subtitleValue}>{points}</Text>
+        </View>
+        <View style={styles.flexBaseline}>
+          <Text style={styles.subtitle}>Goal:</Text>
+          <Text style={styles.subtitleValue}>{level.goal}</Text>
+        </View>
+        <View style={styles.flexBaseline}>
+          <Text style={styles.subtitle}>Moves Left:</Text>
+          <Text style={styles.subtitleValue}>{movesLeft}</Text>
+        </View>
       </View>
       <GestureHandlerRootView style={{ width: "100%" }}>
         <BoardCard
