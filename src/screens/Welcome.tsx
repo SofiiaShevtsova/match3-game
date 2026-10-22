@@ -7,7 +7,7 @@ import { BlurView } from "expo-blur";
 
 import { RootStackParamList } from "../../App";
 import { getUserData, saveUserData } from "../storage/storage";
-import { UserData } from "../game/types";
+import { UserData } from "../types";
 import { styles } from "../styles/styles";
 import { NameInput } from "../components/NameInput";
 

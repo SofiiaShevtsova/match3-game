@@ -1,4 +1,4 @@
-import { TileType } from "./types";
+import { TileType } from "../types";
 
 export const TILE_STYLES: Record<TileType, { color: string; shape: string }> = {
   square:   { color: '#f1c40f', shape: 'square' },

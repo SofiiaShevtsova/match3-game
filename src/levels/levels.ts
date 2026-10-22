@@ -1,4 +1,4 @@
-import { LevelConfig } from "../game/types";
+import { LevelConfig } from "../types";
 
 export const levels: LevelConfig[] = [
   {

@@ -4,10 +4,8 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 
-import { TileType } from "../game/types";
+import { Direction, TileType } from "../types";
 import { styles } from "../styles/styles";
-
-export type Direction = "RIGHT" | "LEFT" | "DOWN" | "UP";
 
 type TileProps = {
   position: { row: number; col: number };

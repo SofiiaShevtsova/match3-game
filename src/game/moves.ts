@@ -1,6 +1,6 @@
 import { createTile } from "../utils/createTile";
 import { findMatches } from "./matches";
-import { Board, Position, Tile } from "./types";
+import { Board, Position, Tile } from "../types";
 
 export const swapTiles = ({
   board,

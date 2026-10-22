@@ -1,4 +1,4 @@
-import { Board, Tile } from "./types";
+import { Board, Tile } from "../types";
 import { createTile } from "../utils/createTile";
 import { findMatches } from "./matches";
 import { hasPossibleMoves } from "./moves";

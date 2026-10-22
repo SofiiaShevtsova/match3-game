@@ -1,4 +1,4 @@
-import { Board, Position } from "./types";
+import { Board, Position } from "../types";
 
 export const findMatches = (board: Board): Position[] => {
   const positionArray: string[] = [];
@@ -41,5 +41,6 @@ export const findMatches = (board: Board): Position[] => {
     row: Number(position.split("-")[1]),
     col: Number(position.split("-")[0]),
   }));
+  
   return positions;
 };

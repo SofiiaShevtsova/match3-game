@@ -15,9 +15,12 @@ export const Game: FC<GameProps> = ({ route }) => {
   const { levelId } = route.params;
   const level = levels[levelId];
   const [points, setPoints] = useState(0);
-  const [movesLeft, setMovesLeft] = useState(level.moves || 0);
+  const [movesLeft, setMovesLeft] = useState(level?.moves || 0);
 
   const board = useMemo(() => {
+    if (!level) {
+      return null;
+    }
     return createBoard({
       tileTypeCount: level.tileTypeCount,
       rowsCount: level.rowsCount,
@@ -36,7 +39,7 @@ export const Game: FC<GameProps> = ({ route }) => {
   const changeMovesLeft = () => {
     setMovesLeft((prev) => prev - 1);
   };
-  if (!level) {
+  if (!level || !board) {
     return (
       <ImageBackground
         source={require("../../assets/background.png")}
@@ -44,19 +47,6 @@ export const Game: FC<GameProps> = ({ route }) => {
         resizeMode="cover"
       >
         <Text style={styles.title}>Level not found</Text>
-      </ImageBackground>
-    );
-  }
-
-  if (movesLeft < 0) {
-    return (
-      <ImageBackground
-        source={require("../../assets/background.png")}
-        style={styles.backgroundGame}
-        resizeMode="cover"
-      >
-        <Text style={styles.title}>You can't resolve this level</Text>
-        <Text style={styles.subtitle}>Final Score: {points}</Text>
       </ImageBackground>
     );
   }
@@ -69,6 +59,19 @@ export const Game: FC<GameProps> = ({ route }) => {
         resizeMode="cover"
       >
         <Text style={styles.title}>You win!</Text>
+        <Text style={styles.subtitle}>Final Score: {points}</Text>
+      </ImageBackground>
+    );
+  }
+
+  if (movesLeft <= 0) {
+    return (
+      <ImageBackground
+        source={require("../../assets/background.png")}
+        style={styles.backgroundGame}
+        resizeMode="cover"
+      >
+        <Text style={styles.title}>You can't resolve this level</Text>
         <Text style={styles.subtitle}>Final Score: {points}</Text>
       </ImageBackground>
     );
@@ -92,8 +95,14 @@ export const Game: FC<GameProps> = ({ route }) => {
           Moves Left: <Text style={styles.subtitleValue}>{movesLeft}</Text>
         </Text>
       </View>
-      <GestureHandlerRootView style={{ width: '100%' }}>
-        <BoardCard board={board} tileSize={tileSize} />
+      <GestureHandlerRootView style={{ width: "100%" }}>
+        <BoardCard
+          board={board}
+          tileSize={tileSize}
+          changeMovesLeft={changeMovesLeft}
+          changePoints={changePoints}
+          tileTypeCount={level.tileTypeCount}
+        />
       </GestureHandlerRootView>
     </ImageBackground>
   );

@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { UserData } from "../game/types";
+import { UserData } from "../types";
 
 export const saveUserData = async ({
   playerName,

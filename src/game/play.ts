@@ -1,42 +1,57 @@
 import { findMatches } from "./matches";
 import { applyGravity, removeMatches, tryMove } from "./moves";
-import { Board, Position, Result } from "./types";
+import { Board, Position, Result } from "../types";
 
-export const playMove = ({
-    board,
-    tileOne,
-    tileTwo,
-    tileTypeCount,
+export const playMove = async ({
+  board,
+  tileOne,
+  tileTwo,
+  tileTypeCount,
+  showBoard,
 }: {
-    board: Board;
-    tileOne: Position;
-    tileTwo: Position;
-    tileTypeCount: number;
-}): Result => {
-    let points = 0;
-    let currentBoard = tryMove({ board, tileOne, tileTwo });
+  board: Board;
+  tileOne: Position;
+  tileTwo: Position;
+  tileTypeCount: number;
+  showBoard: ({
+    newBoard,
+    points,
+  }: {
+    newBoard: Board;
+    points: number;
+  }) => Promise<boolean>;
+}): Promise<Result> => {
+  let points = 0;
+  let currentBoard = tryMove({ board, tileOne, tileTwo });
 
-    if (!currentBoard) {
-        return { points, board };
-    }
+  if (!currentBoard) {
+    return { points, board };
+  }
+  let positionsForRemove = findMatches(currentBoard);
+  await showBoard({
+    newBoard: currentBoard,
+    points: positionsForRemove.length,
+  });
+  while (positionsForRemove.length > 0) {
+    points += positionsForRemove.length;
+    console.log(points);
 
-    let positionsForRemove = findMatches(currentBoard);
+    const boardWithEmptyTile = removeMatches({
+      board: currentBoard,
+      positions: positionsForRemove,
+    });
 
-    while (positionsForRemove.length > 0) {
-        points += positionsForRemove.length;
+    currentBoard = applyGravity({
+      board: boardWithEmptyTile,
+      tileTypeCount,
+    });
 
-        const boardWithEmptyTile = removeMatches({
-            board: currentBoard,
-            positions: positionsForRemove,
-        });
+    positionsForRemove = findMatches(currentBoard);
+    await showBoard({
+      newBoard: currentBoard,
+      points: positionsForRemove.length,
+    });
+  }
 
-        currentBoard = applyGravity({
-            board: boardWithEmptyTile,
-            tileTypeCount,
-        });
-
-        positionsForRemove = findMatches(currentBoard);
-    }
-
-    return { points, board: currentBoard };
+  return { points, board: currentBoard };
 };

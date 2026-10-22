@@ -32,3 +32,5 @@ export type UserData = {
   finishedLevel: number;
   totalPoints: number;
 };
+
+export type Direction = "RIGHT" | "LEFT" | "DOWN" | "UP";

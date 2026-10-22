@@ -1,31 +1,32 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { View } from "react-native";
 
-import { Board } from "../game/types";
+import { Board } from "../types";
 import { styles } from "../styles/styles";
-import { Direction, Tile } from "./Tile";
+import { Tile } from "./Tile";
+import { useBoardGame } from "../hooks/useBoardGame";
 
 type BoardCardProps = {
   board: Board;
   tileSize: number;
+  tileTypeCount: number;
+  changePoints: (delta: number) => void;
+  changeMovesLeft: () => void;
 };
 
-export const BoardCard: FC<BoardCardProps> = ({ board, tileSize }) => {
-  const [currentBoard, setCurrentBoard] = useState(board);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const handleSwipe = ({
-    direction,
-    position,
-  }: {
-    direction: Direction;
-    position: { row: number; col: number };
-  }) => {
-    if (isAnimating) return;
-
-    // TODO: додай логіку переміщення плиток
-    console.log("Swipe:", direction, position);
-  };
+export const BoardCard: FC<BoardCardProps> = ({
+  board,
+  tileSize,
+  tileTypeCount,
+  changePoints,
+  changeMovesLeft,
+}) => {
+  const { currentBoard, handleSwipe } = useBoardGame({
+    board,
+    tileTypeCount,
+    changePoints,
+    changeMovesLeft,
+  });
 
   return (
     <View style={styles.boardCard}>
@@ -39,7 +40,10 @@ export const BoardCard: FC<BoardCardProps> = ({ board, tileSize }) => {
                 type={tile.type}
                 size={tileSize}
                 handleSwipe={handleSwipe}
-                position={{ row: rowInd, col: colIndex }}
+                position={{
+                  row: rowInd,
+                  col: colIndex,
+                }}
               />
             ) : (
               <View
