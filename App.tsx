@@ -1,5 +1,4 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SplashScreen from "expo-splash-screen";
@@ -7,13 +6,14 @@ import * as Font from "expo-font";
 
 import { Welcome } from "./src/screens/Welcome";
 import { Game } from "./src/screens/Game";
-import { useEffect, useState } from "react";
+import { Result } from "./src/screens/Result";
 
 SplashScreen.preventAutoHideAsync();
 
 export type RootStackParamList = {
   Welcome: undefined;
   Game: { levelId: number };
+  Result: { levelId: number; points: number };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -51,6 +51,7 @@ export default function App() {
       >
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Game" component={Game} />
+        <Stack.Screen name="Result" component={Result} />
       </Stack.Navigator>
     </NavigationContainer>
   );

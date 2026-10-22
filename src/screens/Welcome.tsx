@@ -6,7 +6,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { BlurView } from "expo-blur";
 
 import { RootStackParamList } from "../../App";
-import { getUserData, saveUserData } from "../storage/storage";
+import { userStorageServices } from "../storage/storage";
 import { UserData } from "../types";
 import { styles } from "../styles/styles";
 import { NameInput } from "../components/NameInput";
@@ -33,7 +33,7 @@ export const Welcome = () => {
         Alert.alert("Name cannot be empty.");
         return;
       }
-      saveUserData({ ...user, playerName: newName });
+      userStorageServices.saveUserData({ ...user, playerName: newName });
       setUser((prev) => ({ ...prev, playerName: newName }));
       setEditName(false);
     } catch (error) {
@@ -51,11 +51,11 @@ export const Welcome = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userData = await getUserData();
+        const userData = await userStorageServices.getUserFromLocal();
         if (userData) {
           setUser((prev) => ({ ...prev, ...userData }));
         } else {
-          await saveUserData(user);
+          await userStorageServices.saveUserData(user);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);

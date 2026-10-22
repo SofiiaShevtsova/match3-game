@@ -1,6 +1,16 @@
 import React, { FC, useMemo, useState } from "react";
-import { View, Text, ImageBackground, useWindowDimensions } from "react-native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import {
+  View,
+  Text,
+  ImageBackground,
+  useWindowDimensions,
+  Pressable,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { RootStackParamList } from "../../App";
@@ -9,6 +19,11 @@ import { levels } from "../levels/levels";
 import { createBoard } from "../game/board";
 import { BoardCard } from "../components/BoardCard";
 
+type GameScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Game"
+>;
+
 type GameProps = NativeStackScreenProps<RootStackParamList, "Game">;
 
 export const Game: FC<GameProps> = ({ route }) => {
@@ -16,7 +31,8 @@ export const Game: FC<GameProps> = ({ route }) => {
   const level = levels[levelId];
   const [points, setPoints] = useState(0);
   const [movesLeft, setMovesLeft] = useState(level?.moves || 0);
-  const [isWin, setIsWin] = useState(false);
+
+  const navigation = useNavigation<GameScreenNavigationProp>();
 
   const board = useMemo(() => {
     if (!level) {
@@ -39,7 +55,10 @@ export const Game: FC<GameProps> = ({ route }) => {
 
   const changeMovesLeft = (currentPoints: number) => {
     if (points + currentPoints >= level.goal) {
-      setIsWin(true);
+      navigation.navigate("Result", {
+        levelId: levelId,
+        points: points + currentPoints,
+      });
     }
     setMovesLeft((prev) => prev - 1);
   };
@@ -52,19 +71,6 @@ export const Game: FC<GameProps> = ({ route }) => {
         resizeMode="cover"
       >
         <Text style={styles.title}>Level not found</Text>
-      </ImageBackground>
-    );
-  }
-
-  if (isWin) {
-    return (
-      <ImageBackground
-        source={require("../../assets/background.png")}
-        style={styles.backgroundGame}
-        resizeMode="cover"
-      >
-        <Text style={styles.title}>You win!</Text>
-        <Text style={styles.subtitle}>Final Score: {points}</Text>
       </ImageBackground>
     );
   }

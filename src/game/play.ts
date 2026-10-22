@@ -34,7 +34,6 @@ export const playMove = async ({
   });
   while (positionsForRemove.length > 0) {
     points += positionsForRemove.length;
-    console.log(points);
 
     const boardWithEmptyTile = removeMatches({
       board: currentBoard,

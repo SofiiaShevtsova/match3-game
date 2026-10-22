@@ -1,8 +1,8 @@
-export type TileType = 'square' | 'circle' | 'diamond' | 'triangle' | 'hexagon';
+export type TileType = "square" | "circle" | "diamond" | "triangle" | "hexagon";
 
 export type Tile = {
   id: number;
-  type: TileType; 
+  type: TileType;
 };
 
 // board [col][row]
@@ -16,21 +16,26 @@ export type Position = {
 export type Result = {
   points: number;
   board: Board;
-}
+};
 
 export type LevelConfig = {
   id: number;
-  tileTypeCount: number; 
+  tileTypeCount: number;
   rowsCount: number;
   colCount: number;
-  goal: number;        
-  moves: number;      
+  goal: number;
+  moves: number;
 };
 
 export type UserData = {
   playerName: string;
   finishedLevel: number;
   totalPoints: number;
+};
+
+export type ChangeUserData = {
+  finishedLevel: number;
+  points: number;
 };
 
 export type Direction = "RIGHT" | "LEFT" | "DOWN" | "UP";
