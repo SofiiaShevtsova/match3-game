@@ -1,4 +1,4 @@
-export type TileType = "square" | "circle" | "diamond" | "triangle" | "hexagon";
+export type TileType = "square" | "circle" | "diamond" | "triangle" | "heart";
 
 export type Tile = {
   id: number;
