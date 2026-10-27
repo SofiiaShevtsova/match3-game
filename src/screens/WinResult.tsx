@@ -24,11 +24,11 @@ export const WinResult: FC<WinResultProps> = ({ route }) => {
   const navigation = useNavigation<WinResultScreenNavigationProp>();
 
   const handleNextLevel = () => {
-    navigation.navigate("Game", { levelId: levelId + 1 });
+    navigation.replace("Game", { levelId: levelId + 1 });
   };
 
   const handleStartScreen = () => {
-    navigation.navigate("Welcome");
+    navigation.reset({ index: 0, routes: [{ name: "Welcome" }] });
   };
 
   useEffect(() => {

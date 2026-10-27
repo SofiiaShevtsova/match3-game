@@ -23,11 +23,11 @@ export const LoseResult: FC<LoseResultProps> = ({ route }) => {
   const navigation = useNavigation<LoseResultScreenNavigationProp>();
 
   const handlerReloadLevel = () => {
-    navigation.navigate("Game", { levelId: levelId });
+    navigation.replace("Game", { levelId: levelId });
   };
 
   const handleStartScreen = () => {
-    navigation.navigate("Welcome");
+    navigation.reset({ index: 0, routes: [{ name: "Welcome" }] });
   };
 
   return (

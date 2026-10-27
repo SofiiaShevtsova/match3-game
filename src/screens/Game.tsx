@@ -4,7 +4,6 @@ import {
   Text,
   ImageBackground,
   useWindowDimensions,
-  Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -45,31 +44,6 @@ export const Game: FC<GameProps> = ({ route }) => {
     });
   }, [levelId]);
 
-  const { width } = useWindowDimensions();
-
-  const tileSize = Math.floor((width - 20) / level.colCount);
-
-  const changePoints = (delta: number) => {
-    setPoints((prev) => prev + delta);
-  };
-
-  const changeMovesLeft = (currentPoints: number) => {
-    if (points + currentPoints >= level.goal) {
-      navigation.navigate("WinResult", {
-        levelId: levelId,
-        points: points + currentPoints,
-      });
-    }
-
-    if (movesLeft - 1 <= 0) {
-      navigation.navigate("LoseResult", {
-        levelId: levelId,
-        points: points + currentPoints,
-      });
-    }
-    setMovesLeft((prev) => prev - 1);
-  };
-
   if (!level || !board) {
     return (
       <ImageBackground
@@ -81,6 +55,33 @@ export const Game: FC<GameProps> = ({ route }) => {
       </ImageBackground>
     );
   }
+
+  const { width } = useWindowDimensions();
+
+  const tileSize = Math.floor((width - 20) / level.colCount);
+
+  const changePoints = (delta: number) => {
+    setPoints((prev) => prev + delta);
+  };
+
+  const changeMovesLeft = (currentPoints: number) => {
+    if (points + currentPoints >= level.goal) {
+      navigation.replace("WinResult", {
+        levelId: levelId,
+        points: points + currentPoints,
+      });
+      return;
+    }
+
+    if (movesLeft - 1 <= 0) {
+      navigation.replace("LoseResult", {
+        levelId: levelId,
+        points: points + currentPoints,
+      });
+      return;
+    }
+    setMovesLeft((prev) => prev - 1);
+  };
 
   return (
     <ImageBackground

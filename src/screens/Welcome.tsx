@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Text, View, Pressable, Alert, ImageBackground } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import * as SplashScreen from "expo-splash-screen";
 import { BlurView } from "expo-blur";
@@ -48,25 +48,35 @@ export const Welcome = () => {
     navigation.navigate("Game", { levelId: user.finishedLevel });
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userData = await userStorageServices.getUserFromLocal();
-        if (userData) {
-          setUser((prev) => ({ ...prev, ...userData }));
-        } else {
-          await userStorageServices.saveUserData(user);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        SplashScreen.hideAsync();
-        setLoading(false);
-      }
-    };
+  useFocusEffect(
+    useCallback(() => {
+      let active = true;
 
-    fetchUserData();
-  }, []);
+      const fetchUserData = async () => {
+        try {
+          const userData = await userStorageServices.getUserFromLocal();
+          if (!active) return;
+          if (userData) {
+            setUser((prev) => ({ ...prev, ...userData }));
+          } else {
+            await userStorageServices.saveUserData(user);
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        } finally {
+          SplashScreen.hideAsync();
+        }
+      };
+
+      fetchUserData().finally(() => {
+        setLoading(false);
+      });
+
+      return () => {
+        active = false;
+      };
+    }, []),
+  );
 
   if (loading) {
     return (

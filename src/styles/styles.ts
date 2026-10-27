@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
     color: "rgb(0, 100, 0)",
   },
   subtitleValueWithWidth: {
-    width: 40,
+    width: 44,
     fontSize: 20,
     fontFamily: "MainBolt",
     color: "rgb(0, 100, 0)",
