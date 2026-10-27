@@ -15,6 +15,7 @@ type WinResultScreenNavigationProp = NativeStackNavigationProp<
 import { RootStackParamList } from "../../App";
 import { useNavigation } from "@react-navigation/native";
 import { userStorageServices } from "../storage/storage";
+import { levels } from "../levels/levels";
 
 type WinResultProps = NativeStackScreenProps<RootStackParamList, "WinResult">;
 
@@ -46,9 +47,11 @@ export const WinResult: FC<WinResultProps> = ({ route }) => {
     >
       <Text style={styles.title}>You win!</Text>
       <Text style={styles.subtitle}>Final Score: {points}</Text>
-      <Pressable style={styles.button} onPress={handleNextLevel}>
-        <Text style={styles.buttonText}>Next Level</Text>
-      </Pressable>
+      {levelId >= levels.length - 1 ? null : (
+        <Pressable style={styles.button} onPress={handleNextLevel}>
+          <Text style={styles.buttonText}>Next Level</Text>
+        </Pressable>
+      )}
       <Pressable style={styles.button} onPress={handleStartScreen}>
         <Text style={styles.buttonText}>Start Screen</Text>
       </Pressable>

@@ -10,6 +10,7 @@ import { userStorageServices } from "../storage/storage";
 import { UserData } from "../types";
 import { styles } from "../styles/styles";
 import { NameInput } from "../components/NameInput";
+import { levels } from "../levels/levels";
 
 type WelcomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -108,17 +109,21 @@ export const Welcome = () => {
           <Text style={styles.subtitle}>Total Points:</Text>
           <Text style={styles.subtitleValue}>{user.totalPoints}</Text>
         </View>
-        <Pressable
-          style={
-            !user.playerName.trim() || editName
-              ? styles.buttonDisabled
-              : styles.button
-          }
-          disabled={!user.playerName.trim() || editName}
-          onPress={handleStartGame}
-        >
-          <Text style={styles.buttonText}>Start Game</Text>
-        </Pressable>
+        {user.finishedLevel >= levels.length - 1 ? (
+          <Text style={styles.title}>You finished the game!</Text>
+        ) : (
+          <Pressable
+            style={
+              !user.playerName.trim() || editName
+                ? styles.buttonDisabled
+                : styles.button
+            }
+            disabled={!user.playerName.trim() || editName}
+            onPress={handleStartGame}
+          >
+            <Text style={styles.buttonText}>Start Game</Text>
+          </Pressable>
+        )}
       </BlurView>
     </ImageBackground>
   );
