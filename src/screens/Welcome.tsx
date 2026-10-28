@@ -110,8 +110,17 @@ export const Welcome = () => {
           <Text style={styles.subtitleValue}>{user.totalPoints}</Text>
         </View>
         {user.finishedLevel >= levels.length - 1 ? (
-          <Text style={styles.title}>You finished the game!</Text>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              userStorageServices.clearAllStorage();
+              navigation.navigate("Game", { levelId: 0 });
+            }}
+          >
+            <Text style={styles.buttonText}>New Game</Text>
+          </Pressable>
         ) : (
+          // <Text style={styles.title}>You finished the game!</Text>
           <Pressable
             style={
               !user.playerName.trim() || editName

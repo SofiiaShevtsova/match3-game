@@ -1,7 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { runOnJS } from "react-native-reanimated";
+import Animated, {
+  RotateInDownLeft,
+  BounceOut,
+  runOnJS,
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Direction, TileType } from "../types";
@@ -45,7 +54,13 @@ const TileView: FC<TileViewProps> = ({ type, size }) => {
   }
 };
 
-export const Tile: FC<TileProps> = ({ position, type, size, id, handleSwipe }) => {
+export const Tile: FC<TileProps> = ({
+  position,
+  type,
+  size,
+  id,
+  handleSwipe,
+}) => {
   const panGesture = Gesture.Pan().onEnd((event) => {
     const { translationX, translationY } = event;
     const threshold = 20;
@@ -65,18 +80,43 @@ export const Tile: FC<TileProps> = ({ position, type, size, id, handleSwipe }) =
     }
   });
 
+  const x = useSharedValue(size * position.col);
+  const y = useSharedValue(size * position.row);
+
+  useEffect(() => {
+    x.value = withTiming(size * position.col, {
+      duration: 180,
+      easing: Easing.out(Easing.cubic),
+    });
+
+    y.value = withTiming(size * position.row, {
+      duration: 180,
+      easing: Easing.out(Easing.cubic),
+    });
+  }, [position.row, position.col, size]);
+
+  const animatedPosition = useAnimatedStyle(() => ({
+    left: x.value,
+    top: y.value,
+  }));
+
   return (
     <GestureDetector key={id} gesture={panGesture}>
-      <View
+      <Animated.View
         key={id}
-        style={{
-          ...styles.tile,
-          height: size,
-          width: size,
-        }}
+        style={[
+          styles.tile,
+          {
+            height: size,
+            width: size,
+          },
+          animatedPosition,
+        ]}
+        // entering={RotateInDownLeft}
+        exiting={BounceOut.duration(150)}
       >
         <TileView type={type} size={size} />
-      </View>
+      </Animated.View>
     </GestureDetector>
   );
 };

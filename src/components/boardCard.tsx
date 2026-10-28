@@ -28,36 +28,36 @@ export const BoardCard: FC<BoardCardProps> = ({
     changeMovesLeft,
   });
 
+  const boardHeight = tileSize * board[0].length;
+
   return (
-    <View style={styles.boardCard}>
-      {currentBoard.map((column, colIndex) => (
-        <View key={colIndex}>
-          {column.map((tile, rowInd) =>
-            tile ? (
-              <Tile
-                key={tile.id}
-                id={tile.id.toString()}
-                type={tile.type}
-                size={tileSize}
-                handleSwipe={handleSwipe}
-                position={{
-                  row: rowInd,
-                  col: colIndex,
-                }}
-              />
-            ) : (
-              <View
-                key={`empty-${rowInd}-${colIndex}`}
-                style={{
-                  ...styles.tile,
-                  height: tileSize,
-                  width: tileSize,
-                }}
-              />
-            ),
-          )}
-        </View>
-      ))}
+    <View style={{ ...styles.boardCard, height: boardHeight }}>
+      {currentBoard.map((column, colIndex) =>
+        column.map((tile, rowInd) =>
+          tile ? (
+            <Tile
+              key={tile.id}
+              id={tile.id.toString()}
+              type={tile.type}
+              size={tileSize}
+              handleSwipe={handleSwipe}
+              position={{
+                row: rowInd,
+                col: colIndex,
+              }}
+            />
+          ) : (
+            <View
+              key={`empty-${rowInd}-${colIndex}`}
+              style={{
+                ...styles.tile,
+                height: tileSize,
+                width: tileSize,
+              }}
+            />
+          ),
+        ),
+      )}
     </View>
   );
 };

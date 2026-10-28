@@ -1,6 +1,10 @@
+
 import { findMatches } from "./matches";
 import { applyGravity, removeMatches, tryMove } from "./moves";
 import { Board, Position, Result } from "../types";
+
+const delay = (ms: number) =>
+  new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 export const playMove = async ({
   board,
@@ -27,11 +31,14 @@ export const playMove = async ({
   if (!currentBoard) {
     return { points, board };
   }
+
   let positionsForRemove = findMatches(currentBoard);
+
   await showBoard({
     newBoard: currentBoard,
     points: positionsForRemove.length,
   });
+
   while (positionsForRemove.length > 0) {
     points += positionsForRemove.length;
 
@@ -40,12 +47,20 @@ export const playMove = async ({
       positions: positionsForRemove,
     });
 
+    await showBoard({
+      newBoard: boardWithEmptyTile,
+      points: positionsForRemove.length,
+    });
+
+    await delay(100);
+
     currentBoard = applyGravity({
       board: boardWithEmptyTile,
       tileTypeCount,
     });
 
     positionsForRemove = findMatches(currentBoard);
+
     await showBoard({
       newBoard: currentBoard,
       points: positionsForRemove.length,

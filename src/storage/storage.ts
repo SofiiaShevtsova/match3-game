@@ -82,6 +82,15 @@ class LocalStorageService {
       console.error("Error updating user data:", error);
     }
   };
+
+  clearAllStorage = async () => {
+    try {
+      await AsyncStorage.clear();
+      console.log("AsyncStorage повністю очищено!");
+    } catch (e) {
+      console.error("Помилка під час очищення сховища:", e);
+    }
+  };
 }
 
 export const userStorageServices = new LocalStorageService();
