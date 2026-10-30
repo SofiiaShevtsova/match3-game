@@ -50,7 +50,6 @@ export const BoardCard: FC<BoardCardProps> = ({
             <View
               key={`empty-${rowInd}-${colIndex}`}
               style={{
-                ...styles.tile,
                 height: tileSize,
                 width: tileSize,
               }}

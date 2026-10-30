@@ -2,12 +2,10 @@ import React, { FC, useEffect } from "react";
 import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
-  RotateInDownLeft,
   BounceOut,
   runOnJS,
   useSharedValue,
   useAnimatedStyle,
-  withSpring,
   withTiming,
   Easing,
 } from "react-native-reanimated";
@@ -112,7 +110,6 @@ export const Tile: FC<TileProps> = ({
           },
           animatedPosition,
         ]}
-        // entering={RotateInDownLeft}
         exiting={BounceOut.duration(150)}
       >
         <TileView type={type} size={size} />
